@@ -48,3 +48,21 @@ for i in range(3):
 
 fig.tight_layout()
 plt.savefig('figure_1.png')
+
+fig, ax = plt.subplots(nrows=3, ncols=3, subplot_kw={"projection": "3d"})
+for i in range(3):
+  for j in range(3):
+    ax[i, j].plot_surface(ddx, ddy, Z[i * 3 + j], cmap=cm.coolwarm,
+                          linewidth=0, antialiased=False)
+    ax[i, j].set_title(f"Señal {i * 3 + j}")
+
+fig.tight_layout()
+plt.savefig('figure_2.png')
+
+# Generamos las derivadas direccionales para cada imagen
+Dx = []
+Dy = []
+for img in Z:
+  img_dy, img_dx = np.gradient(img)
+  Dx.append(img_dx)
+  Dy.append(img_dy)
