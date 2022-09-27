@@ -411,3 +411,20 @@ ax[1].imshow(Dtf[0,:,:,0])
 ax[2].imshow(Dtf[0,:,:,1])
 fig.tight_layout()
 plt.savefig('figure_5.png')
+
+from tensorflow.keras.callbacks import ModelCheckpoint
+filepath = 'best_weight_model.h5'
+checkpoint = ModelCheckpoint(filepath=filepath,
+                             monitor='loss',
+                             verbose=1,
+                             save_best_only=True,
+                             save_weights_only=True,
+                             mode='min')
+callbacks = [checkpoint]
+
+vae.fit([Dtf, Ztf],
+        batch_size      = BATCH_SIZE,
+        epochs          = EPOCHS,
+        initial_epoch   = INITIAL_EPOCH,
+        steps_per_epoch = steps_per_epoch,
+        callbacks       = callbacks)
