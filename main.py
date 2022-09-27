@@ -66,3 +66,13 @@ for img in Z:
   img_dy, img_dx = np.gradient(img)
   Dx.append(img_dx)
   Dy.append(img_dy)
+
+# Desplegamos una muestra de los gradientes en X
+fig, ax = plt.subplots(nrows=3, ncols=3, figsize=(10, 10))
+for i in range(3):
+  for j in range(3):
+    ax[i,j].imshow(Dx[i*3 + j])
+    ax[i,j].set_title(f"Dx {i*3+j}")
+
+fig.tight_layout()
+plt.savefig('figure_3.png')
