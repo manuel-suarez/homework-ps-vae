@@ -428,3 +428,4 @@ vae.fit([Dtf, Ztf],
         initial_epoch   = INITIAL_EPOCH,
         steps_per_epoch = steps_per_epoch,
         callbacks       = callbacks)
+vae.save_weights("final_weights_model.h5")
