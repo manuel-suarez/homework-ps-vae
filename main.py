@@ -30,8 +30,8 @@ for i in range(num):
   # Generamos polinomio
   Phi = cart.eval_grid(c, matrix=True)
   # Reemplazamos NaN con 0
-  #p = np.nan_to_num(Phi, False, 0)
-  p = Phi
+  p = np.nan_to_num(Phi, False, 0)
+  #p = Phi
   # Reescalamos a 0-1 (necesario para que la red calcule correctamente las métricas)
   # Verificar con el Dr. si esto sería necesario en este caso
   p_scaled = (p - np.min(p)) / (np.max(p) - np.min(p))
