@@ -261,7 +261,7 @@ class Decoder(keras.Model):
     '''
     return self.model(inputs)
 
-  class VAE(keras.Model):
+class VAE(keras.Model):
     def __init__(self, r_loss_factor=1, summary=False, **kwargs):
       super(VAE, self).__init__(**kwargs)
 
@@ -392,3 +392,22 @@ class Decoder(keras.Model):
 vae = VAE(r_loss_factor=R_LOSS_FACTOR, summary=True)
 vae.summary()
 vae.compile(optimizer=keras.optimizers.Adam())
+
+# Reemplazamos el conjunto de prueba del ejemplo MNIST a los gradientes
+# de los polinomios generados
+
+# Convertimos la lista a tensor y agregamos la dimensión del canal (1)
+Dtf_x = tf.expand_dims(tf.convert_to_tensor(Dx, dtype=tf.float32), axis=-1)
+Dtf_y = tf.expand_dims(tf.convert_to_tensor(Dy, dtype=tf.float32), axis=-1)
+# Combinamos los gradientes en un tensor de 2 canales de acuerdo con la especificación
+# de la entrada del encoder INPUT_DIM
+Dtf = tf.keras.layers.Concatenate(axis=3)([Dtf_x, Dtf_y])
+Ztf = tf.expand_dims(tf.convert_to_tensor(Z, dtype=tf.float32), axis=-1)
+
+# Visualizamos el primer dato para verificar que el Tensor se haya creado correctamente
+fig, ax = plt.subplots(nrows=1, ncols=3, figsize=(10, 10))
+ax[0].imshow(Ztf[0,:,:,0])
+ax[1].imshow(Dtf[0,:,:,0])
+ax[2].imshow(Dtf[0,:,:,1])
+fig.tight_layout()
+plt.savefig('figure_5.png')
